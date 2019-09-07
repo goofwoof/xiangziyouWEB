@@ -32,6 +32,12 @@ public class areaController {
 		System.out.println("getAreasList.do//"+cityname);
 		return am.selectByExample(ae);
 	}
+	
+	/**
+	 * 景点位置信息补充
+	 * @param area 补充位置信息的景点的序列化对象
+	 * @return int 添加状态
+	 */
 	@RequestMapping (value="/addAreasLocal.do", method=RequestMethod.POST)
 	public @ResponseBody int addAreasLocal(@RequestParam String area){
 		Areas areas = null;

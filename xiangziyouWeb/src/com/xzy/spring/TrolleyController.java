@@ -31,10 +31,10 @@ public class TrolleyController {
 		return am.selectByExample(ae);
 	}
 	
-
+	@Deprecated
 	@RequestMapping (value="/addTrolley.do", method=RequestMethod.POST)
-	public int addComments(@RequestParam String arealistInTrolley){
-		System.out.println("addComments.do//"+arealistInTrolley);
+	public int addTrolley(@RequestParam String arealistInTrolley){
+		System.out.println("addTrolley.do//"+arealistInTrolley);
 		ArealistInTrolley ait = null;
 		try {
 			ait = mapper.readValue(arealistInTrolley,ArealistInTrolley.class);
@@ -51,7 +51,7 @@ public class TrolleyController {
 	
 
 	@RequestMapping (value="/deleteTrolley.do", method=RequestMethod.POST)
-	public int deleteComments(@RequestParam int id,String userid) {
+	public int deleteTrolley(@RequestParam int id,String userid) {
 		
 		//后续将删除的数据可以备份，进行数据分析
 		ArealistInTrolleyExample ae = new ArealistInTrolleyExample();
