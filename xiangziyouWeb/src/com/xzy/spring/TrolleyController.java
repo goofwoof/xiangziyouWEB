@@ -1,6 +1,7 @@
 package com.xzy.spring;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,8 @@ public class TrolleyController {
 	
 
 	@RequestMapping (value="/getTrolleyList.do", method=RequestMethod.POST)
-	public @ResponseBody List<ArealistInTrolley> getCommentsList(@RequestParam String userid){ 
+	public @ResponseBody List<ArealistInTrolley> getCommentsList(@RequestParam String userid){
+		if(userid.isEmpty())return new ArrayList<ArealistInTrolley>();
 		System.out.println("getTrolleyList.do//"+userid);
 		ArealistInTrolleyExample ae = new ArealistInTrolleyExample();
 		com.xzy.mybatis.pojo.ArealistInTrolleyExample.Criteria c = ae.createCriteria();
@@ -31,7 +33,6 @@ public class TrolleyController {
 		return am.selectByExample(ae);
 	}
 	
-	@Deprecated
 	@RequestMapping (value="/addTrolley.do", method=RequestMethod.POST)
 	public int addTrolley(@RequestParam String arealistInTrolley){
 		System.out.println("addTrolley.do//"+arealistInTrolley);
@@ -41,11 +42,11 @@ public class TrolleyController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			if(ait==null)return -2;
 		}
 		if(ait==null)return -1;
 		ait.setStatus(0);
-		//String address = ait.getAp();
-		//将景点地址信息补充回景点表
+		ait.getAp().replaceAll("\\\"", "\"");
 		return am.insert(ait);
 	}
 	
