@@ -1,227 +1,250 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzy.mybatis.dao.ArealistInTrolleyMapper">
-  <resultMap id="BaseResultMap" type="com.xzy.mybatis.pojo.ArealistInTrolley">
-    <id column="idarealist_in_trolley" jdbcType="INTEGER" property="idarealistInTrolley" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="areaid" jdbcType="INTEGER" property="areaid" />
-    <result column="ap" jdbcType="CHAR" property="ap" />
-    <result column="addtime" jdbcType="DATE" property="addtime" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    idarealist_in_trolley, username, areaid, ap, addtime, status
-  </sql>
-  <select id="selectByExample" parameterType="com.xzy.mybatis.pojo.ArealistInTrolleyExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from arealist_in_trolley
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from arealist_in_trolley
-    where idarealist_in_trolley = #{idarealistInTrolley,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from arealist_in_trolley
-    where idarealist_in_trolley = #{idarealistInTrolley,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.xzy.mybatis.pojo.ArealistInTrolleyExample">
-    delete from arealist_in_trolley
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.xzy.mybatis.pojo.ArealistInTrolley">
-    insert into arealist_in_trolley (idarealist_in_trolley, username, areaid, 
-      ap, addtime, status)
-    values (#{idarealistInTrolley,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{areaid,jdbcType=INTEGER}, 
-      #{ap,jdbcType=CHAR}, #{addtime,jdbcType=DATE}, #{status,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.xzy.mybatis.pojo.ArealistInTrolley">
-    insert into arealist_in_trolley
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="idarealistInTrolley != null">
-        idarealist_in_trolley,
-      </if>
-      <if test="username != null">
-        username,
-      </if>
-      <if test="areaid != null">
-        areaid,
-      </if>
-      <if test="ap != null">
-        ap,
-      </if>
-      <if test="addtime != null">
-        addtime,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="idarealistInTrolley != null">
-        #{idarealistInTrolley,jdbcType=INTEGER},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="areaid != null">
-        #{areaid,jdbcType=INTEGER},
-      </if>
-      <if test="ap != null">
-        #{ap,jdbcType=CHAR},
-      </if>
-      <if test="addtime != null">
-        #{addtime,jdbcType=DATE},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.xzy.mybatis.pojo.ArealistInTrolleyExample" resultType="java.lang.Long">
-    select count(*) from arealist_in_trolley
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update arealist_in_trolley
-    <set>
-      <if test="record.idarealistInTrolley != null">
-        idarealist_in_trolley = #{record.idarealistInTrolley,jdbcType=INTEGER},
-      </if>
-      <if test="record.username != null">
-        username = #{record.username,jdbcType=VARCHAR},
-      </if>
-      <if test="record.areaid != null">
-        areaid = #{record.areaid,jdbcType=INTEGER},
-      </if>
-      <if test="record.ap != null">
-        ap = #{record.ap,jdbcType=CHAR},
-      </if>
-      <if test="record.addtime != null">
-        addtime = #{record.addtime,jdbcType=DATE},
-      </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=INTEGER},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update arealist_in_trolley
-    set idarealist_in_trolley = #{record.idarealistInTrolley,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      areaid = #{record.areaid,jdbcType=INTEGER},
-      ap = #{record.ap,jdbcType=CHAR},
-      addtime = #{record.addtime,jdbcType=DATE},
-      status = #{record.status,jdbcType=INTEGER}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xzy.mybatis.pojo.ArealistInTrolley">
-    update arealist_in_trolley
-    <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="areaid != null">
-        areaid = #{areaid,jdbcType=INTEGER},
-      </if>
-      <if test="ap != null">
-        ap = #{ap,jdbcType=CHAR},
-      </if>
-      <if test="addtime != null">
-        addtime = #{addtime,jdbcType=DATE},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-    </set>
-    where idarealist_in_trolley = #{idarealistInTrolley,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xzy.mybatis.pojo.ArealistInTrolley">
-    update arealist_in_trolley
-    set username = #{username,jdbcType=VARCHAR},
-      areaid = #{areaid,jdbcType=INTEGER},
-      ap = #{ap,jdbcType=CHAR},
-      addtime = #{addtime,jdbcType=DATE},
-      status = #{status,jdbcType=INTEGER}
-    where idarealist_in_trolley = #{idarealistInTrolley,jdbcType=INTEGER}
-  </update>
+	<resultMap id="BaseResultMap"
+		type="com.xzy.mybatis.pojo.ArealistInTrolley">
+		<id column="idarealist_in_trolley" jdbcType="INTEGER"
+			property="idarealistInTrolley" />
+		<result column="username" jdbcType="VARCHAR"
+			property="username" />
+		<result column="areaid" jdbcType="INTEGER" property="areaid" />
+		<result column="ap" jdbcType="CHAR" property="ap" />
+		<result column="addtime" jdbcType="DATE" property="addtime" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		idarealist_in_trolley, username, areaid, ap, addtime, status
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.xzy.mybatis.pojo.ArealistInTrolleyExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from arealist_in_trolley
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from arealist_in_trolley
+		where idarealist_in_trolley = #{idarealistInTrolley,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from arealist_in_trolley
+		where idarealist_in_trolley = #{idarealistInTrolley,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.xzy.mybatis.pojo.ArealistInTrolleyExample">
+		delete from arealist_in_trolley
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert"
+		parameterType="com.xzy.mybatis.pojo.ArealistInTrolley">
+		insert into arealist_in_trolley (idarealist_in_trolley, username, areaid,
+		ap, addtime, status)
+		values (#{idarealistInTrolley,jdbcType=INTEGER},
+		#{username,jdbcType=VARCHAR}, #{areaid,jdbcType=INTEGER},
+		#{ap,jdbcType=CHAR}, #{addtime,jdbcType=DATE},
+		#{status,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.xzy.mybatis.pojo.ArealistInTrolley">
+		insert into arealist_in_trolley
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="idarealistInTrolley != null">
+				idarealist_in_trolley,
+			</if>
+			<if test="username != null">
+				username,
+			</if>
+			<if test="areaid != null">
+				areaid,
+			</if>
+			<if test="ap != null">
+				ap,
+			</if>
+			<if test="addtime != null">
+				addtime,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="idarealistInTrolley != null">
+				#{idarealistInTrolley,jdbcType=INTEGER},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="areaid != null">
+				#{areaid,jdbcType=INTEGER},
+			</if>
+			<if test="ap != null">
+				#{ap,jdbcType=CHAR},
+			</if>
+			<if test="addtime != null">
+				#{addtime,jdbcType=DATE},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.xzy.mybatis.pojo.ArealistInTrolleyExample"
+		resultType="java.lang.Long">
+		select count(*) from arealist_in_trolley
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update arealist_in_trolley
+		<set>
+			<if test="record.idarealistInTrolley != null">
+				idarealist_in_trolley = #{record.idarealistInTrolley,jdbcType=INTEGER},
+			</if>
+			<if test="record.username != null">
+				username = #{record.username,jdbcType=VARCHAR},
+			</if>
+			<if test="record.areaid != null">
+				areaid = #{record.areaid,jdbcType=INTEGER},
+			</if>
+			<if test="record.ap != null">
+				ap = #{record.ap,jdbcType=CHAR},
+			</if>
+			<if test="record.addtime != null">
+				addtime = #{record.addtime,jdbcType=DATE},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update arealist_in_trolley
+		set idarealist_in_trolley =
+		#{record.idarealistInTrolley,jdbcType=INTEGER},
+		username = #{record.username,jdbcType=VARCHAR},
+		areaid = #{record.areaid,jdbcType=INTEGER},
+		ap = #{record.ap,jdbcType=CHAR},
+		addtime = #{record.addtime,jdbcType=DATE},
+		status = #{record.status,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.xzy.mybatis.pojo.ArealistInTrolley">
+		update arealist_in_trolley
+		<set>
+			<if test="username != null">
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="areaid != null">
+				areaid = #{areaid,jdbcType=INTEGER},
+			</if>
+			<if test="ap != null">
+				ap = #{ap,jdbcType=CHAR},
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime,jdbcType=DATE},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where idarealist_in_trolley = #{idarealistInTrolley,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.xzy.mybatis.pojo.ArealistInTrolley">
+		update arealist_in_trolley
+		set username = #{username,jdbcType=VARCHAR},
+		areaid = #{areaid,jdbcType=INTEGER},
+		ap = #{ap,jdbcType=CHAR},
+		addtime = #{addtime,jdbcType=DATE},
+		status = #{status,jdbcType=INTEGER}
+		where idarealist_in_trolley = #{idarealistInTrolley,jdbcType=INTEGER}
+	</update>
 </mapper>
