@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ public class cityController {
 	@Autowired  
     HttpServletRequest request;
 	CityMapper cp = (CityMapper) MybatisUtil.getMapper(CityMapper.class);
+	Logger log = LoggerFactory.getLogger("areaController"); 
 	/**
 	 * 根据城市名称，模糊匹配，返回城市列表
 	 * @param id
@@ -34,7 +37,7 @@ public class cityController {
 	 */
 	@RequestMapping (value="/showCity.do", method=RequestMethod.POST)
 	public @ResponseBody List<City> testJson(int id,@RequestParam String cityname) {
-		System.out.println("showCity.do//"+cityname+id);
+		log.info("showCity.do//"+cityname+id);
 		CityExample cm = new CityExample();
 		cm.createCriteria().andCitynameEqualTo(cityname);
 		List<City> lic = cp.selectByExample(cm);
@@ -46,7 +49,7 @@ public class cityController {
 	 */
 	@RequestMapping (value="/getCityList.do", method=RequestMethod.GET)
 	public @ResponseBody List<City> getCityList() {
-		System.out.println("getCityList.do");
+		log.info("getCityList.do");
 	    return cp.selectByExample(null);
 	}
 
@@ -58,14 +61,14 @@ public class cityController {
 	 */
 	@RequestMapping (value="/Redistest.do", method=RequestMethod.GET)
 	public void redistest() {
-		System.out.println("Redistest.do");
+		log.info("Redistest.do");
 		// stringRedisTemplate的操作
         // String读写
         //设置 redis 字符串数据
         redisTemplate.delete("myStr");
         redisTemplate.opsForValue().set("myStr", "skyLine");
-        System.out.println(redisTemplate.opsForValue().get("myStr"));
-        System.out.println("---------------");
+        log.info(redisTemplate.opsForValue().get("myStr"));
+        log.info("---------------");
 
         // List读写
         redisTemplate.delete("myList");
@@ -74,9 +77,9 @@ public class cityController {
         redisTemplate.opsForList().leftPush("myList", "A");
         List<String> listCache = redisTemplate.opsForList().range("myList", 0, -1);
         for (String s : listCache) {
-            System.out.println(s);
+            log.info(s);
         }
-        System.out.println("---------------");
+        log.info("---------------");
 
         // Set读写
         redisTemplate.delete("mySet");
@@ -85,9 +88,9 @@ public class cityController {
         redisTemplate.opsForSet().add("mySet", "C");
         Set<String> setCache = redisTemplate.opsForSet().members("mySet");
         for (String s : setCache) {
-            System.out.println(s);
+            log.info(s);
         }
-        System.out.println("---------------");
+        log.info("---------------");
 
         // Hash读写
         redisTemplate.delete("myHash");
@@ -96,8 +99,8 @@ public class cityController {
         redisTemplate.opsForHash().put("myHash", "HN", "河南");
         Map<Object, Object> hashCache = redisTemplate.opsForHash().entries("myHash");
         for (Map.Entry<Object, Object> entry : hashCache.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
+            log.info(entry.getKey() + " - " + entry.getValue());
         }
-        System.out.println("---------------");
+        log.info("---------------");
 	}
 }

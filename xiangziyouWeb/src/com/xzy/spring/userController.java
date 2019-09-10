@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ public class userController {
     HttpServletRequest request;
 	UserMapper um = (UserMapper) MybatisUtil.getMapper(UserMapper.class);
 	ObjectMapper mapper = new ObjectMapper();
+	Logger log = LoggerFactory.getLogger("areaController"); 
 	/**
 	 * 这是一个创建新用户的函数
 	 * @param jsonofUser 序列化的用户对象（String of json）
@@ -36,14 +39,14 @@ public class userController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.err.println("newUser.do//"+ user==null? "" : user.toString());
+			log.error("newUser.do//"+ user==null? "" : user.toString());
 			return -1;
 		}
 		if(um.selectByPrimaryKey(user.getUsername())==null) {
-			System.out.println("newUser.do//"+user.toString());
+			log.info("newUser.do//"+user.toString());
 			return um.insertSelective(user); 
 		}	
-		System.err.println("newUser.do//"+user.toString());
+		log.error("newUser.do//"+user.toString());
 		return -1;
 	}
 	/**
@@ -55,17 +58,17 @@ public class userController {
 	@RequestMapping (value="/login.do", method=RequestMethod.POST)
 	public @ResponseBody User testJson(@RequestParam String id,String password) {
 		if(request.getServletContext().getAttribute(id)!=null) {
-			System.out.println("login.do//[已登录]"+id+"><"+password);
+			log.info("login.do//[已登录]"+id+"><"+password);
 			return new User();
 		}
 		User account = um.selectByPrimaryKey(id);
 		if(account==null) {
-			System.err.println("login.do//[空账户]"+id+"><"+password);
+			log.error("login.do//[空账户]"+id+"><"+password);
 			return null;
 		}
-		System.out.println(account.toString());
+		log.info(account.toString());
 		if(account.getPassword().equals(password)) {
-			System.out.println("login.do//[登录成功]"+id+"><"+password);
+			log.info("login.do//[登录成功]"+id+"><"+password);
 			request.getServletContext().setAttribute(id, "");
 			if(request.getServletContext().getAttribute("accountTotal")==null) {
 				request.getServletContext().setAttribute("accountTotal",1);
@@ -77,7 +80,7 @@ public class userController {
 			}
 			return account;
 		}
-		System.err.println("login.do//[密码错误]"+id+"><"+password);
+		log.error("login.do//[密码错误]"+id+"><"+password);
 		return new User();  
 	}
 }

@@ -3,6 +3,8 @@ package com.xzy.spring;
 import java.io.IOException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,7 @@ import com.xzy.mybatis.pojo.ArealistInTrolley;
 public class CatchRouteController {
 	ArealistInTrolleyMapper am = (ArealistInTrolleyMapper) MybatisUtil.getMapper(ArealistInTrolleyMapper.class);
 	ObjectMapper mapper = new ObjectMapper();
+	Logger log = LoggerFactory.getLogger("areaController"); 
 	/**
 	 * 根据用户提交的景点列表，进行路径规划，返回经过路径规划的列表
 	 * @param arealistInTrolley 待规划的景点列表

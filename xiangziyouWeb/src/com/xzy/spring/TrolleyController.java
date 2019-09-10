@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,12 +22,12 @@ import com.xzy.mybatis.pojo.ArealistInTrolleyExample;
 public class TrolleyController {
 	ArealistInTrolleyMapper am = (ArealistInTrolleyMapper) MybatisUtil.getMapper(ArealistInTrolleyMapper.class);
 	ObjectMapper mapper = new ObjectMapper();
-	
+	Logger log = LoggerFactory.getLogger("areaController"); 
 
 	@RequestMapping (value="/getTrolleyList.do", method=RequestMethod.POST)
 	public @ResponseBody List<ArealistInTrolley> getCommentsList(@RequestParam String userid){
 		if(userid.isEmpty())return new ArrayList<ArealistInTrolley>();
-		System.out.println("getTrolleyList.do//"+userid);
+		log.info("getTrolleyList.do//"+userid);
 		ArealistInTrolleyExample ae = new ArealistInTrolleyExample();
 		com.xzy.mybatis.pojo.ArealistInTrolleyExample.Criteria c = ae.createCriteria();
 		c.andUsernameEqualTo(userid);
@@ -35,7 +37,7 @@ public class TrolleyController {
 	
 	@RequestMapping (value="/addTrolley.do", method=RequestMethod.POST)
 	public int addTrolley(@RequestParam String arealistInTrolley){
-		System.out.println("addTrolley.do//"+arealistInTrolley);
+		log.info("addTrolley.do//"+arealistInTrolley);
 		ArealistInTrolley ait = null;
 		try {
 			ait = mapper.readValue(arealistInTrolley,ArealistInTrolley.class);

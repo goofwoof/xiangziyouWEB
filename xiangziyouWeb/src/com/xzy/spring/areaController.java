@@ -3,6 +3,8 @@ package com.xzy.spring;
 import java.io.IOException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import com.xzy.mybatis.pojo.AreasExample;
 public class areaController {
 	AreasMapper am = (AreasMapper) MybatisUtil.getMapper(AreasMapper.class);
 	ObjectMapper mapper = new ObjectMapper();
+	Logger log = LoggerFactory.getLogger("areaController"); 
 	/**
 	 * 根据城市名返回景点列表
 	 * @param cityname
@@ -29,7 +32,7 @@ public class areaController {
 		AreasExample ae = new AreasExample();
 		com.xzy.mybatis.pojo.AreasExample.Criteria c = ae.createCriteria();
 		c.andCityEqualTo(cityname);
-		System.out.println("getAreasList.do//"+cityname);
+		log.info("getAreasList.do//"+cityname);
 		return am.selectByExample(ae);
 	}
 	
@@ -47,11 +50,11 @@ public class areaController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(areas.getAddress().replaceAll("\\\"", "\""));
+		log.info(areas.getAddress().replaceAll("\\\"", "\""));
 		AreasExample ae = new AreasExample();
 		com.xzy.mybatis.pojo.AreasExample.Criteria c = ae.createCriteria();
 		c.andIdEqualTo(areas.getId());
-		System.out.println("addAreasLocal.do//"+areas.toString());
+		log.info("addAreasLocal.do//"+areas.toString());
 		return am.updateByExampleSelective(areas, ae);
 		
 	}

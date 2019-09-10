@@ -3,6 +3,8 @@ package com.xzy.spring;
 import java.io.IOException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import com.xzy.mybatis.pojo.Comments;
 public class commentController {
 	CommentsMapper cm = (CommentsMapper) MybatisUtil.getMapper(CommentsMapper.class);
 	ObjectMapper mapper = new ObjectMapper();
+	Logger log = LoggerFactory.getLogger("areaController"); 
 	
 	/**
 	 * 这个类实现获取某景点的评论链表功能
@@ -28,7 +31,7 @@ public class commentController {
 	 * */
 	@RequestMapping (value="/getCommentsList.do", method=RequestMethod.POST)
 	public @ResponseBody List<Comments> getCommentsList(@RequestParam String area){ 
-		System.out.println("getCommentsList.do//"+area);
+		log.info("getCommentsList.do//"+area);
 		CommentsExample ae = new CommentsExample();
 		com.xzy.mybatis.pojo.CommentsExample.Criteria c = ae.createCriteria();
 		c.andAreaEqualTo(area);
@@ -42,7 +45,8 @@ public class commentController {
 	 */
 	@RequestMapping (value="/addComments.do", method=RequestMethod.POST)
 	public int addComments(@RequestParam String comment){
-		System.out.println("addComments.do//"+comment);
+		log.info("addComments.do//"+comment);
+		
 		Comments commnets = null;
 		try {
 			commnets = mapper.readValue(comment,Comments.class);
